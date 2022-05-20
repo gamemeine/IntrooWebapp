@@ -1,0 +1,58 @@
+{
+  "info": {
+    "custmer": {
+      "id": 1,
+      "name": "Grzegorz",
+      "surname": "Statkiewicz"
+    },
+    "car": {
+      "id": 1,
+      "model": "Mazda CX-5",
+      "plate": "DST 2115"
+    }
+  },
+  "events": [
+    {
+      "id": 1,
+      "title": "Przyjęcie pojazdu",
+      "date": "2022-04-10T13:45:00.000Z",
+      "description": {
+        "date": "2022-05-03T15:20:00.000Z",
+        "text": "Lorem ipsum coś tam coś tam v11111"
+      },
+      "info": [
+        {
+          "id": 1,
+          "date": "2022-05-03T15:20:00.000Z",
+          "text": "jakaś informacja 1234455"
+        },
+        {
+          "id": 2,
+          "date": "2022-05-03T15:20:00.000Z",
+          "text": "a druga informacja"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Wymiana oleju w skrzyni biegów",
+      "date": "2022-04-11T13:45:00.000Z",
+      "description": {
+        "date": "2022-05-14T15:20:00.000Z",
+        "text": "Lorem ipsum coś tam coś tam v2222"
+      }
+    }
+  ],
+  "pricing": [
+    {
+      "id": 1,
+      "title": "Przegląd",
+      "price": 123.0
+    },
+    {
+      "id": 2,
+      "title": "Wymiana oleju",
+      "price": 200.0
+    }
+  ]
+}
