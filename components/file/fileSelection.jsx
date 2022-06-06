@@ -1,10 +1,26 @@
 import { useEffect, useState } from "react";
 import { getAllFiles, getFile } from "../../lib/File";
-import { ExitIcon } from "../main/icons/exit";
+import { toShownDate } from "../../utils/date/dateUtils";
 
 export const FileSelection = () => {
   const { data } = getAllFiles(2);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [orderedData, setOrderedData] = useState();
+
+  useEffect(() => {
+    let dataObj = {};
+    data?.forEach((file) => {
+      const date = file.createdAt.split("T")[0];
+      if (dataObj[date]) {
+        dataObj[date].push(file);
+      } else {
+        dataObj[date] = [file];
+      }
+    });
+    const dataArr = Object.entries(dataObj);
+    dataArr.sort().reverse();
+    setOrderedData(dataArr);
+  }, [data]);
 
   const handleSelect = (item) => setSelectedItems([...selectedItems, item]);
   const handleUnselect = (item) =>
@@ -12,29 +28,22 @@ export const FileSelection = () => {
 
   return (
     <div>
-      <div>
-        <Title>Dzisiaj</Title>
-        <Container>
-          {data?.map((file) => (
-            <Item
-              onSelect={() => handleSelect(file)}
-              onUnselect={() => handleUnselect(file)}
-            >
-              <Photo source={file.source} alt={file.name} />
-            </Item>
-          ))}
-        </Container>
-      </div>
-      <div>
-        <Title>Wczoraj</Title>
-        <Container>
-          {data?.map((file) => (
-            <Item>
-              <Photo source={file.source} alt={file.name} />
-            </Item>
-          ))}
-        </Container>
-      </div>
+      {orderedData &&
+        orderedData.map(([date, files]) => (
+          <div>
+            <Title>{toShownDate(date)}</Title>
+            <Container>
+              {files?.map((file) => (
+                <Item
+                  onSelect={() => handleSelect(file)}
+                  onUnselect={() => handleUnselect(file)}
+                >
+                  <Photo source={file.source} alt={file.name} />
+                </Item>
+              ))}
+            </Container>
+          </div>
+        ))}
     </div>
   );
 };

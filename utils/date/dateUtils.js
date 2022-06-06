@@ -50,9 +50,27 @@ export const toDateWithoutTimezone = (date) => {
   return new Date(date.getTime() - userTimezoneOffset);
 };
 
-export const toShowDate = (date) => new Date(date).toLocaleDateString();
+export const toStringDate = (date) => new Date(date).toLocaleDateString();
 
 export const toApiDate = (date) => toDateWithoutTimezone(date).toJSON();
+
+export const toShownDate = (date) => {
+  const momentDate = moment(date);
+  const formatedDate = momentDate.format("DD-MM-YYYY");
+
+  if (formatedDate == moment().format("DD-MM-YYYY")) return "Dzisiaj";
+
+  if (formatedDate == moment().subtract(1, "days").format("DD-MM-YYYY"))
+    return "Wczoraj";
+
+  if (formatedDate == moment().subtract(2, "days").format("DD-MM-YYYY"))
+    return "Przedwczoraj";
+
+  const beautiDate = `${momentDate.day()} ${
+    months[momentDate.month()].full
+  } ${momentDate.year()}`;
+  return beautiDate;
+};
 
 const months = [
   { full: "Styczeń", short: "sty" },
