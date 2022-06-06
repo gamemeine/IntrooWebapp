@@ -1,4 +1,4 @@
-import { months } from "./months";
+import { months } from "./dateUtils";
 export const normalizeDate = (date) => {
   const _date = new Date(date);
 

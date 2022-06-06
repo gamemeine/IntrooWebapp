@@ -1,8 +1,8 @@
-import { Navbar } from "../main/navigation/navbar";
+import { MainNavbar } from "../nav/mainNavbar";
 
 export const MainLayout = ({ children }) => (
   <>
-    <Navbar />
+    <MainNavbar />
     <main className="sm:px-20 px-5">{children}</main>
   </>
 );

@@ -1,4 +1,4 @@
-import { CustomerIcon } from "../icons/customer";
+import { CustomerIcon } from "../main/icons/customer";
 
 export const CustomerCard = ({ customer }) => {
   const label = `${customer?.name} ${customer?.surname}`;

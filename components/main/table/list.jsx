@@ -1,7 +1,11 @@
-export const List = ({ items, selectedItem, onSelect }) => {
+import { useState } from "react";
+
+export const List = ({ items, selectedItem, onSelect = () => null }) => {
+  const [selected, setSelected] = useState(selectedItem);
+
   const handleSelect = (e, item) => {
-    e.preventDefault();
     onSelect(item);
+    setSelected(item);
   };
 
   return (
@@ -14,9 +18,7 @@ export const List = ({ items, selectedItem, onSelect }) => {
 
           return (
             <tr
-              className={
-                item.id === selectedItem?.id ? activeStyle : normalStyle
-              }
+              className={item.id === selected?.id ? activeStyle : normalStyle}
               onClick={(e) => handleSelect(e, item)}
               key={item.id}
             >

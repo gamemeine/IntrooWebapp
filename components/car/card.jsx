@@ -1,4 +1,4 @@
-import { CarIcon } from "../icons/car";
+import { CarIcon } from "../main/icons/car";
 
 export const CarCard = ({ car }) => {
   const label = car?.plate;

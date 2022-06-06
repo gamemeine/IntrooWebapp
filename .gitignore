@@ -8,7 +8,13 @@
 # testing
 /coverage
 
+# testing
+
+test.js
+
+
 #vs code
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

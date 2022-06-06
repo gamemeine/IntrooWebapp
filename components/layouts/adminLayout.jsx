@@ -1,8 +1,8 @@
-import { Navbar } from "../../admin/navbar";
+import { AdminNavbar } from "../nav/adminNavbar";
 
 export const AdminLayout = ({ children }) => (
   <>
-    <Navbar />
+    <AdminNavbar />
     <main className="sm:px-20 px-5">{children}</main>
   </>
 );

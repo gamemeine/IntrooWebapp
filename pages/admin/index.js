@@ -1,4 +1,4 @@
-import { AdminLayout } from "../../components/layouts/admin/adminLayout";
+import { AdminLayout } from "../../components/layouts/adminLayout";
 import { Input } from "../../components/main/form/input";
 import { Submit } from "../../components/main/form/submit";
 

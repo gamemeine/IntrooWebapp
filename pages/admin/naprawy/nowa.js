@@ -1,19 +1,18 @@
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import { AdminLayout } from "../../../components/layouts/admin/adminLayout";
-import { RepairSectionHeading } from "../../../components/layouts/admin/repairSectionHeading";
+import { useState } from "react";
+import { AdminLayout } from "../../../components/layouts/adminLayout";
+import { RepairSectionHeading } from "../../../components/nav/repairSectionHeading";
 import { DatePicker } from "../../../components/main/form/datePicker";
-import { SelectInput } from "../../../components/main/form/selectInput";
 import { Submit } from "../../../components/main/form/submit";
 import { Heading, Hero } from "../../../components/main/typography/headings";
-import { getAllCars } from "../../../utils/api/car";
-import { getAllCusomers } from "../../../utils/api/customer";
 import { createRepair } from "../../../utils/api/repair";
-import { CustomerCard } from "../../../components/main/cards/customerCard";
-import { CarCard } from "../../../components/main/cards/carCard";
+import { CustomerCard } from "../../../components/customer/card";
+import { CarCard } from "../../../components/car/card";
 import { PlusIcon } from "../../../components/main/icons/plus";
-import { ReturnButton } from "../../../components/main/navigation/returnButton";
+import { ReturnButton } from "../../../components/nav/returnButton";
 import { toDateWithoutTimezone } from "../../../utils/date/dateUtils";
+import { CustomerSelect } from "../../../components/customer/select";
+import { CarSelect } from "../../../components/car/select";
 
 export default function NewRepair() {
   const [customer, setCustomer] = useState(null);
@@ -35,10 +34,7 @@ export default function NewRepair() {
     if (response) router.push(`/admin/naprawy/${response.id}`);
   };
 
-  const handleReturn = (e) => {
-    e.preventDefault();
-    router.back();
-  };
+  const handleReturn = (e) => router.back();
 
   return (
     <div>
@@ -75,81 +71,38 @@ NewRepair.getLayout = function getLayout(page) {
 };
 
 const CustomerSection = ({ onChange }) => {
-  const [customers, setCustomers] = useState();
-  const [selectedCustomer, setSelectedCustomer] = useState();
-
-  useEffect(() => {
-    fetchCustomers();
-  }, []);
-
-  const fetchCustomers = async () => {
-    await getAllCusomers()
-      .then((data) =>
-        data.map((customer) => ({
-          id: customer.id,
-          label: customer.name + " " + customer.surname,
-          sublabel: "505 721 926",
-          value: customer,
-        }))
-      )
-      .then((data) => setCustomers(data));
-  };
+  const [customer, setCustomer] = useState();
 
   const handleSelect = (customer) => {
-    setSelectedCustomer(customer?.value);
-    onChange(customer.value);
+    setCustomer(customer);
+    onChange(customer);
   };
 
   return (
     <div>
       <Heading>Klient</Heading>
       <div className="flex justify-between py-2 items-center">
-        {selectedCustomer && <CustomerCard customer={selectedCustomer} />}
-        <SelectInput
-          title="Wybierz klienta"
-          items={customers}
-          onSelect={handleSelect}
-        />
+        {customer && <CustomerCard customer={customer} />}
+        <CustomerSelect onSelect={handleSelect} />
       </div>
     </div>
   );
 };
 
 const CarSection = ({ onChange }) => {
-  const [cars, setCars] = useState();
-  const [selectedCar, setSelectedCar] = useState();
-
-  useEffect(() => {
-    fetchCars();
-  }, []);
-
-  const fetchCars = async () =>
-    await getAllCars()
-      .then((data) =>
-        data.map((car) => ({
-          id: car.id,
-          label: car.plate,
-          sublabel: car.model,
-          value: car,
-        }))
-      )
-      .then((data) => setCars(data));
+  const [car, setCar] = useState();
 
   const handleSelect = (car) => {
-    setSelectedCar(car.value);
-    onChange(car.value);
+    setCar(car);
+    onChange(car);
   };
 
   return (
     <div>
       <Heading>Pojazd</Heading>
       <div className="flex justify-between py-2 items-center">
-        {selectedCar && <CarCard car={selectedCar} />}
-        <SelectInput
-          title="Wybierz pojazd"
-          items={cars}
-          onSelect={handleSelect}
-        />
+        {car && <CarCard car={car} />}
+        <CarSelect onSelect={handleSelect} />
       </div>
     </div>
   );

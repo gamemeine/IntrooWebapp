@@ -1,5 +1,5 @@
-import { LeftArrowIcon } from "../icons/Arrows";
-import { IconButton } from "../buttons/iconButton";
+import { LeftArrowIcon } from "../main/icons/Arrows";
+import { IconButton } from "../main/buttons/iconButton";
 
 export const ReturnButton = ({ onClick }) => {
   return (

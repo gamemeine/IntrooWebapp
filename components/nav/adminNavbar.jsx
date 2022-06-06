@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 
 const routes = [
-  { name: "Moja naprawa", link: "/naprawa" },
-  { name: "Serwis", link: "/serwis" },
-  { name: "Kontakt", link: "/kontakt" },
-  { name: "O nas", link: "/onas" },
+  { name: "Naprawy", link: "/admin/naprawy" },
+  { name: "Klienci", link: "/admin/klienci" },
+  { name: "Pojazdy", link: "/admin/pojazdy" },
+  { name: "Ustawienia", link: "/admin/ustawienia" },
 ];
 
-export const Navbar = () => {
+export const AdminNavbar = () => {
   const router = useRouter();
 
   const handleClick = (e, link) => {
@@ -18,11 +18,11 @@ export const Navbar = () => {
   return (
     <nav className="sticky z-50 top-0 bg-white/75 backdrop-blur-lg border-neutral-200 px-2 sm:px-4 py-2.5">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
-        <a href="/" className="flex items-center">
+        <a href="/admin" className="flex items-center">
           <Logo />
         </a>
         <div className="flex md:order-2">
-          <BigButton>Otwórz w aplikacji</BigButton>
+          <div className="w-32"></div>
           <MobileMenu />
         </div>
         <div
@@ -48,6 +48,9 @@ export const Navbar = () => {
 const Logo = () => (
   <span className="self-center text-xl font-semibold whitespace-nowrap">
     statkiewicz
+    <span className="text-xl font-extralight whitespace-nowrap">
+      {" | Admin"}
+    </span>
   </span>
 );
 

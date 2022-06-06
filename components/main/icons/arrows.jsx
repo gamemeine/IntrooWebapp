@@ -1,4 +1,4 @@
-export const LeftArrowIcon = ({ w = 4, h = 4 }) => {
+export const LeftArrowIcon = ({ w = 5, h = 5 }) => {
   const style = `w-${w} h-${h}`;
   return (
     <svg
@@ -16,7 +16,7 @@ export const LeftArrowIcon = ({ w = 4, h = 4 }) => {
   );
 };
 
-export const RightArrowIcon = ({ w = 4, h = 4 }) => {
+export const RightArrowIcon = ({ w = 5, h = 5 }) => {
   const style = `w-${w} h-${h}`;
   return (
     <svg

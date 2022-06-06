@@ -4,7 +4,7 @@ import {
   getWeekDayShortName,
   getMonthAndBesideDates,
 } from "../../../utils/date/dateUtils";
-import { LeftArrowIcon, RightArrowIcon } from "../icons/Arrows";
+import { LeftArrowIcon, RightArrowIcon } from "../icons/arrows";
 
 export const DatePicker = ({ onChange }) => {
   const currentDate = new Date(

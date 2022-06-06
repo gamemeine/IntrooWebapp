@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { normalizeDate } from "../../utils/normalizeDate";
+import { normalizeDate } from "../../utils/date/normalizeDate";
 import { MainLayout } from "../../components/layouts/mainLayout";
 import {
   Heading,
   SubHeading,
   Hero,
 } from "../../components/main/typography/headings";
-import { Event } from "../../components/repair/event";
+import { Event } from "../../components/event/event";
 import data from "./data.json";
 
 export default function Repair() {

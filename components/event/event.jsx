@@ -1,4 +1,4 @@
-import { months } from "../../utils/months";
+import { months } from "../../utils/date/dateUtils";
 
 export const Event = ({ active, date, title, onSelected }) => {
   const getMonthDay = () => {

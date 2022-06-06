@@ -1,14 +1,13 @@
-export const Input = ({ name, id, defaultValue, onChange }) => (
+export const TextareaInput = ({ name, id, ...props }) => (
   <div className="relative z-0 w-full mb-6 group">
-    <input
-      type="text"
+    <textarea
       name={name}
+      id={id}
+      rows="2"
       className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-neutral-600 peer"
       placeholder=" "
       required=""
-      defaultValue={defaultValue}
-      onChange={onChange}
-      id={id}
+      {...props}
     />
     <label
       htmlFor={name}

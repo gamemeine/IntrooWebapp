@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { AdminLayout } from "../../../components/layouts/admin/adminLayout";
-import { RepairSectionHeading } from "../../../components/layouts/admin/repairSectionHeading";
+import { AdminLayout } from "../../../components/layouts/adminLayout";
+import { RepairSectionHeading } from "../../../components/nav/repairSectionHeading";
 import { Button } from "../../../components/main/buttons/button";
 import { IconButton } from "../../../components/main/buttons/iconButton";
-import { CarCard } from "../../../components/main/cards/carCard";
-import { CustomerCard } from "../../../components/main/cards/customerCard";
+import { CarCard } from "../../../components/car/card";
+import { CustomerCard } from "../../../components/customer/card";
 import { EventCard } from "../../../components/main/cards/eventCard";
 import { Input } from "../../../components/main/form/input";
 import { Submit } from "../../../components/main/form/submit";
@@ -18,7 +18,7 @@ import { DangerIndicator } from "../../../components/main/indicators/danger";
 import { SuccessIndicator } from "../../../components/main/indicators/success";
 import { Modal } from "../../../components/main/modals/modal";
 import { WarningModal } from "../../../components/main/modals/warningModal";
-import { ReturnButton } from "../../../components/main/navigation/returnButton";
+import { ReturnButton } from "../../../components/nav/returnButton";
 import { LoadingSection } from "../../../components/main/other/loadingSection";
 import { Heading, Hero } from "../../../components/main/typography/headings";
 import { createEvent, updateEvent } from "../../../utils/api/event";
@@ -31,28 +31,16 @@ import {
   toApiDate,
   toDateWithoutTimezone,
 } from "../../../utils/date/dateUtils";
+import { useSingleRepair } from "../../../hooks/api/repairHooks";
 
 export default function Details() {
   const router = useRouter();
   const { id } = router.query;
+  const { data, error } = useSingleRepair(id);
 
   const [repair, setRepair] = useState();
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (!repair) {
-      loadRepair();
-    }
-  }, [router]);
-
-  const loadRepair = async () =>
-    await getRepair(id).then((data) => {
-      // if (data?.status == 404) return router.push("/admin/naprawy");
-
-      setRepair(data);
-      setIsLoading(false);
-      console.log(data);
-    });
+  useEffect(() => setRepair(data), [data]);
 
   const handleRepairClose = async () => {
     const _repair = repair;
@@ -60,40 +48,34 @@ export default function Details() {
     _repair.status = 0;
     const response = await updateRepair(_repair);
 
-    response && setRepair(_repair);
+    if (response) setRepair(_repair);
   };
 
   const handleRepairDelete = async () =>
     await deleteRepair(id).then(() => router.push("/admin/naprawy"));
 
   return (
-    <LoadingSection isLoading={isLoading}>
-      <div>
-        <PageHero {...repair} />
-        <div className="w-full flex justify-between items-center">
-          <ReturnButton />
-          <div className="flex">
-            <RepairDeleteButton onDelete={handleRepairDelete} />
-            <RepairCloseButton onClose={handleRepairClose} />
-          </div>
-        </div>
-        <div className="grid grid-cols-3">
-          <div>
-            <PeriodSection {...repair} />
-            <CustomerSection {...repair} />
-            <CarSection {...repair} />
-          </div>
-          <div>
-            <EventsSection
-              {...repair}
-              onEventAdd={loadRepair}
-              onEventEdit={loadRepair}
-            />
-          </div>
-          <div></div>
+    <div>
+      <PageHero {...repair} />
+      <div className="w-full flex justify-between items-center">
+        <ReturnButton />
+        <div className="flex">
+          <RepairDeleteButton onDelete={handleRepairDelete} />
+          <RepairCloseButton onClose={handleRepairClose} />
         </div>
       </div>
-    </LoadingSection>
+      <div className="grid grid-cols-3">
+        <div>
+          <PeriodSection {...repair} />
+          <CustomerSection {...repair} />
+          <CarSection {...repair} />
+        </div>
+        <div>
+          <EventsSection {...repair} />
+        </div>
+        <div></div>
+      </div>
+    </div>
   );
 }
 
@@ -172,7 +154,6 @@ const RepairDeleteButton = ({ onDelete }) => {
   return (
     <div className="p-2">
       <Button
-        secondary
         title="Usuń"
         icon={<TrashIcon w={6} h={6} />}
         onClick={handleDeleting}
@@ -235,7 +216,7 @@ const CarSection = ({ car }) => {
   );
 };
 
-const EventsSection = ({ id, events, onEventAdd, onEventEdit }) => {
+const EventsSection = ({ id, events }) => {
   const title = "Zdarzenia";
   const [isAdding, setIsAdding] = useState(false);
   const [editingEvent, setEditingEvent] = useState(null);
@@ -247,7 +228,7 @@ const EventsSection = ({ id, events, onEventAdd, onEventEdit }) => {
       repairId: id,
     };
 
-    const response = await createEvent(newEvent).then(() => onEventAdd());
+    const response = await createEvent(newEvent);
     setIsAdding(false);
   };
 
@@ -259,7 +240,7 @@ const EventsSection = ({ id, events, onEventAdd, onEventEdit }) => {
       repairId: id,
     };
 
-    const response = await updateEvent(updatedEvent).then(() => onEventEdit());
+    const response = await updateEvent(updatedEvent);
     setEditingEvent(null);
   };
 

@@ -50,6 +50,8 @@ export const toDateWithoutTimezone = (date) => {
   return new Date(date.getTime() - userTimezoneOffset);
 };
 
+export const toShowDate = (date) => new Date(date).toLocaleDateString();
+
 export const toApiDate = (date) => toDateWithoutTimezone(date).toJSON();
 
 const months = [
