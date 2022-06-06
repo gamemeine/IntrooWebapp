@@ -59,14 +59,14 @@ export const EventForm = ({ onClose, onAdd, repair }) => {
 };
 
 const GalleryContainer = ({ children }) => (
-  <div class="container">
-    <div class="flex flex-wrap">{children}</div>
+  <div className="container">
+    <div className="flex flex-wrap">{children}</div>
   </div>
 );
 
 const GalleryItem = ({ children }) => (
-  <div class="flex flex-wrap w-1/3">
-    <div class="w-full p-1 aspect-video relative">{children}</div>
+  <div className="flex flex-wrap w-1/3">
+    <div className="w-full p-1 aspect-video relative">{children}</div>
   </div>
 );
 

@@ -1,6 +1,6 @@
 import { DangerIndicator } from "../main/indicators/danger";
 import { SuccessIndicator } from "../main/indicators/success";
-import { toShowDate } from "../../utils/date/dateUtils";
+import { toStringDate } from "../../utils/date/dateUtils";
 
 export const RepairTable = ({ repairs, onRepairInspect }) => {
   return (
@@ -34,7 +34,7 @@ export const RepairTable = ({ repairs, onRepairInspect }) => {
             <th scope="row" className="px-6 py-4 font-medium text-gray-900">
               {id}
             </th>
-            <td className="px-6 py-4">{toShowDate(startDate)}</td>
+            <td className="px-6 py-4">{toStringDate(startDate)}</td>
             <td className="px-6 py-4">{car.model}</td>
             <td className="px-6 py-4">{car.plate}</td>
             <td className="px-6 py-4">{`${customer.name} ${customer.surname}`}</td>

@@ -7,7 +7,7 @@ import { PlusIcon } from "../../../components/main/icons/plus";
 import { RepairTable } from "../../../components/repair/table";
 import { Search } from "../../../components/search/search";
 import { useAllRepairs } from "../../../hooks/api/repairHooks";
-import { toShowDate } from "../../../utils/date/dateUtils";
+import { toStringDate } from "../../../utils/date/dateUtils";
 
 export default function Index() {
   const { data, error } = useAllRepairs();
@@ -25,7 +25,7 @@ export default function Index() {
     const keywordList = [];
     data.forEach((x) => {
       keywordList.push({ key: x.id, value: x.id });
-      keywordList.push({ key: x.id, value: toShowDate(x.startDate) });
+      keywordList.push({ key: x.id, value: toStringDate(x.startDate) });
       keywordList.push({ key: x.id, value: x.car.model });
       keywordList.push({ key: x.id, value: x.car.plate });
       keywordList.push({
