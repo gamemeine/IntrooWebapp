@@ -66,9 +66,11 @@ export const toShownDate = (date) => {
   if (formatedDate == moment().subtract(2, "days").format("DD-MM-YYYY"))
     return "Przedwczoraj";
 
-  const beautiDate = `${momentDate.day() + 1} ${
-    months[momentDate.month()].full
-  } ${momentDate.year()}`;
+  const day = momentDate.day() + 1;
+  const month = months[momentDate.month()].full;
+  const year = moment().year() !== momentDate.year() ? momentDate.year() : "";
+
+  const beautiDate = `${day} ${month} ${year}`;
   return beautiDate;
 };
 
