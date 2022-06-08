@@ -1,4 +1,6 @@
 import moment from "moment";
+import { months } from "./months";
+import { weekDays } from "./weekDays";
 
 export const getDaysInMonth = (year, month) => {
   return new Date(year, month + 1, 0).getDate();
@@ -73,28 +75,3 @@ export const toShownDate = (date) => {
   const beautiDate = `${day} ${month} ${year}`;
   return beautiDate;
 };
-
-const months = [
-  { full: "Styczeń", short: "sty" },
-  { full: "Luty", short: "lut" },
-  { full: "Marzec", short: "mar" },
-  { full: "Kwiecień", short: "kwie" },
-  { full: "Maj", short: "maj" },
-  { full: "Czerwiec", short: "cze" },
-  { full: "Lipiec", short: "lip" },
-  { full: "Sierpień", short: "sie" },
-  { full: "Wrzesień", short: "wrz" },
-  { full: "Październik", short: "paź" },
-  { full: "Listopad", short: "lis" },
-  { full: "Grudzień", short: "gru" },
-];
-
-const weekDays = [
-  { full: "Niedziela", short: "Nd" },
-  { full: "Poniedziałek", short: "Pn" },
-  { full: "Wtorek", short: "Wt" },
-  { full: "Środa", short: "Śr" },
-  { full: "Czwartek", short: "Cz" },
-  { full: "Piątek", short: "Pt" },
-  { full: "Sobota", short: "Sb" },
-];
