@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { getAllFiles, getFile, addFile } from "../../lib/File";
+import { getAllFiles, addFile } from "../../lib/File";
 import { toShownDate } from "../../utils/date/dateUtils";
 import { FileInput } from "../main/form/fileInput";
 import { Loader } from "../main/other/loader";
+import { Item } from "./Item";
 
-export const FileSection = () => {
+export const FileSection = ({ onChange }) => {
   const { data, mutate } = getAllFiles();
   const [selectedItems, setSelectedItems] = useState([]);
   const [orderedData, setOrderedData] = useState();
   const [isUploading, setIsUploading] = useState(false);
 
-  useEffect(() => {
+  const prepareData = () => {
     let dataObj = {};
     data?.forEach((file) => {
       const date = file.createdAt.split("T")[0];
@@ -24,13 +25,20 @@ export const FileSection = () => {
     dataArr.sort().reverse();
     dataArr.map(([date, files]) => [date, files.sort().reverse()]);
     setOrderedData(dataArr);
-  }, [data]);
+  };
 
-  const handleSelect = (item) => setSelectedItems([...selectedItems, item]);
-  const handleUnselect = (item) =>
+  useEffect(prepareData, [data]);
+
+  const handleSelect = (item) => {
+    setSelectedItems([...selectedItems, item]);
+    handleSelect(selectedItems);
+  };
+  const handleUnselect = (item) => {
     setSelectedItems(selectedItems.filter((x) => x != item));
+    handleSelect(selectedItems);
+  };
 
-  const uploadFiles = async (e) => {
+  const handleAdd = async (e) => {
     setIsUploading(true);
     const files = e.target.files;
     for (const file of files) {
@@ -62,7 +70,7 @@ export const FileSection = () => {
       <div className="pb-4">
         <Title>Dodaj</Title>
         <div className="flex justify-center items-center h-40 transition-all">
-          {isUploading ? <Loader /> : <FileInput onChange={uploadFiles} />}
+          {isUploading ? <Loader /> : <FileInput onChange={handleAdd} />}
         </div>
       </div>
       {gallery}
@@ -75,26 +83,6 @@ const Container = ({ children }) => (
     <div className="flex flex-wrap">{children}</div>
   </div>
 );
-
-const Item = ({ children, onSelect = () => null, onUnselect = () => null }) => {
-  const [selected, setSelected] = useState(false);
-  const handleSelect = (e) => {
-    e.preventDefault();
-    setSelected(!selected);
-    selected ? onUnselect() : onSelect();
-  };
-  return (
-    <div className="flex flex-wrap w-1/3 relative" onClick={handleSelect}>
-      <div
-        className={`w-full p-1 ${
-          selected && "opacity-50 scale-95"
-        } transition-all`}
-      >
-        {children}
-      </div>
-    </div>
-  );
-};
 
 const Photo = ({ source, alt }) => {
   return (
