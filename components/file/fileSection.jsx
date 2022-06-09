@@ -31,11 +31,11 @@ export const FileSection = ({ onChange }) => {
 
   const handleSelect = (item) => {
     setSelectedItems([...selectedItems, item]);
-    handleSelect(selectedItems);
+    onChange(selectedItems);
   };
   const handleUnselect = (item) => {
     setSelectedItems(selectedItems.filter((x) => x != item));
-    handleSelect(selectedItems);
+    onChange(selectedItems);
   };
 
   const handleAdd = async (e) => {
